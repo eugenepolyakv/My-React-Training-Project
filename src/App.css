@@ -12,31 +12,8 @@
     grid-gap: 10px;
 }
 
-.header {
-    grid-area: h;
-    background-color: #61dafb;
-}
-.header img {
-    width: 200px;
-}
-
-.nav {
-    grid-area: n;
-    background-color: brown;
-}
-
-.content {
-    grid-area: c;
-    background-color: darkmagenta;
-}
-
-.App {
+/* .App {
     text-align: center;
-}
-
-.imgOnAllWidth img {
-    width: 100%;
-    height: 75%;
 }
 
 .App-logo {
@@ -72,4 +49,4 @@
     to {
         transform: rotate(360deg);
     }
-}
+} */

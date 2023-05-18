@@ -1,0 +1,9 @@
+.content {
+    grid-area: c;
+    background-color: darkmagenta;
+}
+
+.imgOnAllWidth img {
+    width: 100%;
+    height: 75%;
+}
