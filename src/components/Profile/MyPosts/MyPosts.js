@@ -7,9 +7,8 @@ const MyPosts = () => {
             My posts
             <div>New post</div>
             <div>
-                <Post />
-                <Post />
-                <Post />
+                <Post message="What's up?" />
+                <Post message="It's my first post" />
             </div>
         </div>
     );

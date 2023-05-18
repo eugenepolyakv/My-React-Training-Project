@@ -1,7 +1,7 @@
 import classes from './Post.module.css';
 
-const MyPosts = () => {
-    return <div className={classes.item}>Post 1</div>;
+const MyPosts = (props) => {
+    return <div className={classes.item}>{props.message}</div>;
 };
 
 export default MyPosts;
