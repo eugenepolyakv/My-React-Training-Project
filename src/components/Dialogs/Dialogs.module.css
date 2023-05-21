@@ -1,0 +1,16 @@
+.dialogs {
+    display: grid;
+
+    grid-template-columns: 15% 80%;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5%;
+    grid-row-gap: 0px;
+}
+
+.messages {
+    padding: 5% 0 0 5%;
+    height: 100%;
+}
+
+.view {
+}
