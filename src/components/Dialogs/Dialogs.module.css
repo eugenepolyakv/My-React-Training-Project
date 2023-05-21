@@ -5,12 +5,13 @@
     grid-template-rows: 1fr;
     grid-column-gap: 5%;
     grid-row-gap: 0px;
+    padding: 2% 0 0 2%;
+    height: 2000px;
 }
 
-.messages {
-    padding: 5% 0 0 5%;
+/* .messages {
     height: 100%;
-}
+} */
 
 .view {
 }
