@@ -2,7 +2,7 @@ import classes from './Dialogs.module.css';
 import Dialogue from './Dialogue/Dialogue';
 import Message from './Message/Message';
 const Dialogs = (props) => {
-    let DialogsData = [
+    let dialogsData = [
         { id: 1, name: 'Viktor' },
         { id: 2, name: 'Denis' },
         { id: 3, name: 'Natasha' },
@@ -15,19 +15,25 @@ const Dialogs = (props) => {
         { id: 3, message: "How's it going" },
     ];
 
+    // let dialogueElements = [
+    //     <Dialogue {...dialogsData[0]} />,
+    //     <Dialogue {...dialogsData[1]} />,
+    //     <Dialogue {...dialogsData[2]} />,
+    //     <Dialogue {...dialogsData[3]} />,
+    // ];
+
+    let dialogueElements = dialogsData.map((el) => <Dialogue {...el} />);
+
+    // let messageElements = [
+    //     <Message {...messageData[0]}></Message>,
+    //     <Message {...messageData[1]}></Message>,
+    //     <Message {...messageData[2]}></Message>,
+    // ];
+    let messageElements = messageData.map((el) => <Message {...el}></Message>);
     return (
         <div className={classes.dialogs}>
-            <div className={classes.users}>
-                <Dialogue {...DialogsData[0]} />
-                <Dialogue {...DialogsData[1]} />
-                <Dialogue {...DialogsData[2]} />
-                <Dialogue {...DialogsData[3]} />
-            </div>
-            <div className={classes.view}>
-                <Message {...messageData[0]}></Message>
-                <Message {...messageData[1]}></Message>
-                <Message {...messageData[2]}></Message>
-            </div>
+            <div className={classes.users}>{dialogueElements}</div>
+            <div className={classes.view}>{messageElements}</div>
         </div>
     );
 };
