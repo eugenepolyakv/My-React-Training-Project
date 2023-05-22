@@ -16,8 +16,25 @@ let messageData = [
 ];
 
 let state = {
-    messagesGeneralData: { messageData, dialogsData },
-    profileGeneralData: { posts },
+    messagesGeneralData: { messageData, dialogsData, newTextMessage: '' },
+    profileGeneralData: { posts, newPostText: '' },
+};
+
+window.state = state;
+
+export let addMessage = () => {
+    let newMessage = {
+        id: 4,
+        message: state.messagesGeneralData.newTextMessage,
+    };
+    state.messagesGeneralData.messageData.push(newMessage);
+    state.messagesGeneralData.newTextMessage = '';
+    rerenderEntireTree(state);
+};
+
+export let updateNewTextMessage = (newText) => {
+    state.messagesGeneralData.newTextMessage = newText;
+    rerenderEntireTree(state);
 };
 
 export let addPost = (postMessage) => {
@@ -28,4 +45,10 @@ export let addPost = (postMessage) => {
     state.profileGeneralData.posts.push(newPost);
     rerenderEntireTree(state);
 };
+
+export let updateNewPostText = (newText) => {
+    state.profileGeneralData.newPostText = newText;
+    rerenderEntireTree(state);
+};
+
 export default state;

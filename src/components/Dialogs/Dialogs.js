@@ -1,3 +1,4 @@
+import React from 'react';
 import classes from './Dialogs.module.css';
 import Dialogue from './Dialogue/Dialogue';
 import Message from './Message/Message';
@@ -9,16 +10,31 @@ const Dialogs = (props) => {
         <Message {...el}></Message>
     ));
 
+    let dialogueArea = React.createRef();
+
+    let dialogueTextOnChange = () => {
+        let text = dialogueArea.current.value;
+        props.updateNewTextMessage(text);
+    };
+
+    let newMessage = () => {
+        props.addMessage();
+    };
+
     return (
         <div className={classes.dialogs}>
             <div className={classes.users}>{dialogueElements}</div>
             <div>
                 <div className={classes.view}>{messageElements}</div>
                 <div>
-                    <textarea></textarea>
+                    <textarea
+                        ref={dialogueArea}
+                        onChange={dialogueTextOnChange}
+                        value={props.newTextMessage}
+                    ></textarea>
                 </div>
                 <div>
-                    <button>Send message</button>
+                    <button onClick={newMessage}>Send message</button>
                 </div>
             </div>
         </div>
