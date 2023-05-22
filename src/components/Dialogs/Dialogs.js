@@ -20,7 +20,6 @@ const Dialogs = (props) => {
     let newMessage = () => {
         props.addMessage();
     };
-
     return (
         <div className={classes.dialogs}>
             <div className={classes.users}>{dialogueElements}</div>
@@ -30,7 +29,7 @@ const Dialogs = (props) => {
                     <textarea
                         ref={dialogueArea}
                         onChange={dialogueTextOnChange}
-                        value={props.newTextMessage}
+                        value={props.messagesGeneralData.newTextMessage}
                     ></textarea>
                 </div>
                 <div>

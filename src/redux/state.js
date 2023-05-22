@@ -37,12 +37,13 @@ export let updateNewTextMessage = (newText) => {
     rerenderEntireTree(state);
 };
 
-export let addPost = (postMessage) => {
+export let addPost = () => {
     let newPost = {
         id: 5,
-        message: postMessage,
+        message: state.profileGeneralData.newPostText,
     };
     state.profileGeneralData.posts.push(newPost);
+    state.profileGeneralData.newPostText = '';
     rerenderEntireTree(state);
 };
 
