@@ -18,4 +18,11 @@ let state = {
     profileGeneralData: { posts },
 };
 
+export let addPost = (postMessage) => {
+    let newPost = {
+        id: 5,
+        message: postMessage,
+    };
+    state.profileGeneralData.posts.push(newPost);
+};
 export default state;

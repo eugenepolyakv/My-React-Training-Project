@@ -12,7 +12,15 @@ const Dialogs = (props) => {
     return (
         <div className={classes.dialogs}>
             <div className={classes.users}>{dialogueElements}</div>
-            <div className={classes.view}>{messageElements}</div>
+            <div>
+                <div className={classes.view}>{messageElements}</div>
+                <div>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <button>Send message</button>
+                </div>
+            </div>
         </div>
     );
 };

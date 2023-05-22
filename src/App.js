@@ -32,6 +32,7 @@ const App = (props) => {
                             element={
                                 <Profile
                                     posts={props.state.profileGeneralData.posts}
+                                    addPost={props.addPost}
                                 />
                             }
                         />
