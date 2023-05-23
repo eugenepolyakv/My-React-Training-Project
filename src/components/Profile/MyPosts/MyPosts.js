@@ -9,14 +9,12 @@ const MyPosts = (props) => {
 
     let addPost = () => {
         debugger;
-        // let text = newPostElement.current.value;
-        props.addPost();
-        // props.updateNewPostText('');
+        props.dispatch({ type: 'ADD-POST' });
     };
 
     let onTextAreaChange = () => {
         let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+        props.dispatch({ type: 'UPDATE-POST', newText: text });
     };
 
     return (

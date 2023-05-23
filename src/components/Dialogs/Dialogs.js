@@ -14,11 +14,11 @@ const Dialogs = (props) => {
 
     let dialogueTextOnChange = () => {
         let text = dialogueArea.current.value;
-        props.updateNewTextMessage(text);
+        props.dispatch({ type: 'UPDATE-MESSAGE', newText: text });
     };
 
     let newMessage = () => {
-        props.addMessage();
+        props.dispatch({ type: 'ADD-MESSAGE' });
     };
     return (
         <div className={classes.dialogs}>
