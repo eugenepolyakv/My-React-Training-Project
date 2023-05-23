@@ -1,3 +1,7 @@
+const ADD_POST = 'ADD_POST';
+const ADD_MESSAGE = 'ADD_MESSAGE';
+const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+const UPDATE_POST = 'UPDATE_POST';
 let store = {
     _state: {
         messagesGeneralData: {
@@ -32,7 +36,7 @@ let store = {
         console.log('State changed');
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profileGeneralData.newPostText,
@@ -40,10 +44,10 @@ let store = {
             this._state.profileGeneralData.posts.push(newPost);
             this._state.profileGeneralData.newPostText = '';
             this._callSubscriber(store);
-        } else if (action.type === 'UPDATE-POST') {
+        } else if (action.type === UPDATE_POST) {
             this._state.profileGeneralData.newPostText = action.newText;
             this._callSubscriber(store);
-        } else if (action.type === 'ADD-MESSAGE') {
+        } else if (action.type === ADD_MESSAGE) {
             let newMessage = {
                 id: 4,
                 message: this._state.messagesGeneralData.newTextMessage,
@@ -51,11 +55,29 @@ let store = {
             this._state.messagesGeneralData.messageData.push(newMessage);
             this._state.messagesGeneralData.newTextMessage = '';
             this._callSubscriber(store);
-        } else if (action.type === 'UPDATE-MESSAGE') {
+        } else if (action.type === UPDATE_MESSAGE) {
             this._state.messagesGeneralData.newTextMessage = action.newText;
             this._callSubscriber(store);
         }
     },
+};
+
+export const addPostActionCreator = () => ({ type: ADD_POST });
+
+export const updateNewPostActionCreator = (text) => {
+    return {
+        type: UPDATE_POST,
+        newText: text,
+    };
+};
+
+export const addMessageActionCreator = () => ({ type: ADD_MESSAGE });
+
+export const updateNewMessageActionCreator = (text) => {
+    return {
+        type: UPDATE_MESSAGE,
+        newText: text,
+    };
 };
 
 window.store = store;
