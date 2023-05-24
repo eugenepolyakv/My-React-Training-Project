@@ -8,18 +8,18 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 console.log(typeof store.getState);
 
-let rerenderEntireTree = (state) => {
+let rerenderEntireTree = (store) => {
     root.render(
         <React.StrictMode>
-            <App state={state} dispatch={store.dispatch.bind(store)} />
+            <App store={store} />
         </React.StrictMode>
     );
 };
-rerenderEntireTree(store.getState());
+rerenderEntireTree(store);
 
 store.subscribe(() => {
-    let state = store.getState();
-    rerenderEntireTree(state);
+    // let state = store.getState();
+    rerenderEntireTree(store);
 });
 
 // If you want to start measuring performance in your app, pass a function
