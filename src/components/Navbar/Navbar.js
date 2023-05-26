@@ -49,11 +49,20 @@ const Navbar = () => {
                     className={(navData) =>
                         navData.isActive ? classes.active : classes.item
                     }
-                    to="Settings"
+                    to="settings"
                 >
                     Settings
                 </NavLink>
             </div>
+
+            <NavLink
+                className={(navData) =>
+                    navData.isActive ? classes.active : classes.item
+                }
+                to="users"
+            >
+                Users
+            </NavLink>
         </nav>
     );
 };
