@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Users from './users';
+import Users from './usersClass';
 import { followAC, setUsersAC, unfollowAC } from '../../redux/users-reducer';
 
 const data = (state) => {
