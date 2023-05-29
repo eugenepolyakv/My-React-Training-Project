@@ -11,15 +11,15 @@ const User = (props) => {
                 <img src="https://cdn-icons-png.flaticon.com/512/37/37943.png" />
                 <div>
                     <button id={props.id} onClick={onButtonClick}>
-                        {props.followed ? 'Follow' : 'Unfollow'}
+                        {props.followed ? 'Unfollow' : 'Follow'}
                     </button>
                 </div>
             </div>
             <div className={c.information}>
                 <div className={c.wrapper}>
-                    <div>{props.username}</div>
+                    <div>{props.name}</div>
                     <div className={c.location}>
-                        {props.location.country + ' ' + props.location.city}
+                        {/* {props.location.country + ' ' + props.location.city} */}
                     </div>
                     <div>{props.status}</div>
                 </div>
