@@ -23,7 +23,12 @@ const Users = (props) => {
                 {props.users.map((el) => (
                     <div className={c.wrapper}>
                         <div className={c.pictureForProfile}>
-                            <img src="https://cdn-icons-png.flaticon.com/512/37/37943.png" />
+                            <img
+                                src={
+                                    el.photos.small ||
+                                    'https://cdn-icons-png.flaticon.com/512/37/37943.png'
+                                }
+                            />
                             <div>
                                 <button
                                     id={el.id}
