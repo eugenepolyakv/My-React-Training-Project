@@ -53,14 +53,14 @@ export const UserReducer = (state = initialState, action) => {
             return state;
     }
 };
-export const switchFetchingConditionAC = (fetching) => ({
+export const switchFetchingCondition = (fetching) => ({
     type: SWITCH_FETCHING_CONDITION,
     fetching,
 });
-export const changeCurrentPageAC = (page) => ({
+export const changeCurrentPage = (page) => ({
     type: CHANGE_CURRENT_PAGE,
     page,
 });
-export const setUsersAC = (users) => ({ type: SET_USERS, users });
-export const followAC = (userID) => ({ type: FOLLOW, userID });
-export const unfollowAC = (userID) => ({ type: UNFOLLOW, userID });
+export const setUsers = (users) => ({ type: SET_USERS, users });
+export const follow = (userID) => ({ type: FOLLOW, userID });
+export const unfollow = (userID) => ({ type: UNFOLLOW, userID });

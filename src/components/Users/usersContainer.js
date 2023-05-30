@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import {
-    changeCurrentPageAC,
-    switchFetchingConditionAC,
-    followAC,
-    setUsersAC,
-    unfollowAC,
+    changeCurrentPage,
+    switchFetchingCondition,
+    follow,
+    setUsers,
+    unfollow,
 } from '../../redux/users-reducer';
 import Users from './Users';
 import axios from 'axios';
@@ -13,26 +13,26 @@ import Preloader from '../common/Preloader/Preloader';
 
 class UsersContainer extends React.Component {
     componentDidMount = () => {
-        this.props.switchFetchingConditionAC(this.props.isFetching);
+        this.props.switchFetchingCondition(this.props.isFetching);
         axios
             .get(
                 `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
             )
             .then((response) => {
                 this.props.setUsers(response.data.items);
-                this.props.switchFetchingConditionAC(this.props.isFetching);
+                this.props.switchFetchingCondition(this.props.isFetching);
             });
     };
     changeCurrentPage = (page) => {
         this.props.changeCurrentPage(page);
-        this.props.switchFetchingConditionAC(this.props.isFetching);
+        this.props.switchFetchingCondition(this.props.isFetching);
         axios
             .get(
                 `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
             )
             .then((response) => {
                 this.props.setUsers(response.data.items);
-                this.props.switchFetchingConditionAC(this.props.isFetching);
+                this.props.switchFetchingCondition(this.props.isFetching);
             });
     };
     onFollowClick = (el) => {
@@ -66,29 +66,37 @@ const data = (state) => {
         isFetching: state.usersGeneralData.isFetching,
     };
 };
-const callBacks = (dispatch) => {
-    return {
-        makePersonFollowed: (userID) => {
-            let action = followAC(userID);
-            dispatch(action);
-        },
-        makePersonUnfollowed: (userID) => {
-            let action = unfollowAC(userID);
-            dispatch(action);
-        },
-        setUsers: (users) => {
-            let action = setUsersAC(users);
-            dispatch(action);
-        },
-        changeCurrentPage: (page) => {
-            let action = changeCurrentPageAC(page);
-            dispatch(action);
-        },
-        switchFetchingConditionAC: (fetching) => {
-            let action = switchFetchingConditionAC(fetching);
-            dispatch(action);
-        },
-    };
+// const callBacks = (dispatch) => {
+//     return {
+//         makePersonFollowed: (userID) => {
+//             let action = followAC(userID);
+//             dispatch(action);
+//         },
+//         makePersonUnfollowed: (userID) => {
+//             let action = unfollowAC(userID);
+//             dispatch(action);
+//         },
+//         setUsers: (users) => {
+//             let action = setUsersAC(users);
+//             dispatch(action);
+//         },
+//         changeCurrentPage: (page) => {
+//             let action = changeCurrentPageAC(page);
+//             dispatch(action);
+//         },
+//         switchFetchingCondition: (fetching) => {
+//             let action = switchFetchingConditionAC(fetching);
+//             dispatch(action);
+//         },
+//     };
+// };
+
+let callBacks = {
+    follow,
+    unfollow,
+    setUsers,
+    changeCurrentPage,
+    switchFetchingCondition,
 };
 
 export default connect(data, callBacks)(UsersContainer);
