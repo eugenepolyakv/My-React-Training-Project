@@ -1,10 +1,18 @@
 import { connect } from 'react-redux';
 import Users from './usersClass';
-import { followAC, setUsersAC, unfollowAC } from '../../redux/users-reducer';
+import {
+    changeCurrentPageAC,
+    followAC,
+    setUsersAC,
+    unfollowAC,
+} from '../../redux/users-reducer';
 
 const data = (state) => {
     return {
         users: state.usersGeneralData.users,
+        pageSize: state.usersGeneralData.pageSize,
+        totalUsersCount: state.usersGeneralData.totalUsersCount,
+        currentPage: state.usersGeneralData.currentPage,
     };
 };
 const callBacks = (dispatch) => {
@@ -19,6 +27,10 @@ const callBacks = (dispatch) => {
         },
         setUsers: (users) => {
             let action = setUsersAC(users);
+            dispatch(action);
+        },
+        changeCurrentPage: (page) => {
+            let action = changeCurrentPageAC(page);
             dispatch(action);
         },
     };

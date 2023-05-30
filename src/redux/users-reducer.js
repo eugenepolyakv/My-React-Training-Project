@@ -1,46 +1,19 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
 let initialState = {
-    users: [
-        // {
-        //     id: 1,
-        //     username: 'Denis',
-        //     location: {
-        //         country: 'Russia',
-        //         city: 'Samara',
-        //     },
-        //     status: 'wwwww',
-        //     followed: false,
-        // },
-        // {
-        //     id: 2,
-        //     username: 'Valera',
-        //     location: {
-        //         country: 'Russia',
-        //         city: 'Samara',
-        //     },
-        //     status: 'dwddad',
-        //     followed: true,
-        // },
-        // {
-        //     id: 3,
-        //     username: 'Kolya',
-        //     location: {
-        //         country: 'Belarus',
-        //         city: 'Minsk',
-        //     },
-        //     status: 'xxxxxxxx',
-        //     followed: false,
-        // },
-    ],
+    users: [],
+    pageSize: 3,
+    totalUsersCount: 16,
+    currentPage: 2,
 };
 
 export const UserReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
             return {
-                // ...state,
+                ...state,
                 users: state.users.map((u) => {
                     if (u.id == action.userID) {
                         u.followed = true;
@@ -50,7 +23,7 @@ export const UserReducer = (state = initialState, action) => {
             };
         case UNFOLLOW:
             return {
-                // ...state,
+                ...state,
                 users: state.users.map((u) => {
                     if (u.id == action.userID) {
                         u.followed = false;
@@ -60,13 +33,22 @@ export const UserReducer = (state = initialState, action) => {
             };
         case SET_USERS:
             return {
-                users: [...state.users, ...action.users],
+                ...state,
+                users: [...action.users],
+            };
+        case CHANGE_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.page,
             };
         default:
             return state;
     }
 };
-
+export const changeCurrentPageAC = (page) => ({
+    type: CHANGE_CURRENT_PAGE,
+    page,
+});
 export const setUsersAC = (users) => ({ type: SET_USERS, users });
 export const followAC = (userID) => ({ type: FOLLOW, userID });
 export const unfollowAC = (userID) => ({ type: UNFOLLOW, userID });
