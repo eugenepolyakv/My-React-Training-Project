@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import c from './users.module.css';
 
 const Users = (props) => {
@@ -23,12 +24,17 @@ const Users = (props) => {
                 {props.users.map((el) => (
                     <div className={c.wrapper}>
                         <div className={c.pictureForProfile}>
-                            <img
-                                src={
-                                    el.photos.small ||
-                                    'https://cdn-icons-png.flaticon.com/512/37/37943.png'
-                                }
-                            />
+                            <NavLink
+                                onClick={() => props.setCurrentUserID(el.id)}
+                                to={`/profile/${el.id}`}
+                            >
+                                <img
+                                    src={
+                                        el.photos.small ||
+                                        'https://cdn-icons-png.flaticon.com/512/37/37943.png'
+                                    }
+                                />
+                            </NavLink>
                             <div>
                                 <button
                                     id={el.id}
