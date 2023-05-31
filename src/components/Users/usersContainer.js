@@ -16,7 +16,8 @@ class UsersContainer extends React.Component {
         this.props.switchFetchingCondition(this.props.isFetching);
         axios
             .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+                { withCredentials: true }
             )
             .then((response) => {
                 this.props.setUsers(response.data.items);
@@ -28,7 +29,8 @@ class UsersContainer extends React.Component {
         this.props.switchFetchingCondition(this.props.isFetching);
         axios
             .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
+                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
+                { withCredentials: true }
             )
             .then((response) => {
                 this.props.setUsers(response.data.items);
@@ -51,6 +53,8 @@ class UsersContainer extends React.Component {
                     totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
+                    follow={this.props.follow}
+                    unfollow={this.props.unfollow}
                 />
             </>
         );
@@ -67,30 +71,6 @@ const data = (state) => {
         currentUserID: state.profileGeneralData.currentUserID,
     };
 };
-// const callBacks = (dispatch) => {
-//     return {
-//         makePersonFollowed: (userID) => {
-//             let action = followAC(userID);
-//             dispatch(action);
-//         },
-//         makePersonUnfollowed: (userID) => {
-//             let action = unfollowAC(userID);
-//             dispatch(action);
-//         },
-//         setUsers: (users) => {
-//             let action = setUsersAC(users);
-//             dispatch(action);
-//         },
-//         changeCurrentPage: (page) => {
-//             let action = changeCurrentPageAC(page);
-//             dispatch(action);
-//         },
-//         switchFetchingCondition: (fetching) => {
-//             let action = switchFetchingConditionAC(fetching);
-//             dispatch(action);
-//         },
-//     };
-// };
 
 let callBacks = {
     follow,
