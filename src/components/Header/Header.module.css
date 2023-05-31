@@ -1,7 +1,11 @@
 .header {
     grid-area: h;
     background-color: #61dafb;
+    display: flex;
 }
 .header img {
     width: 200px;
+}
+.login {
+    margin-left: auto;
 }
