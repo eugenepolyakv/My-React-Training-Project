@@ -24,10 +24,7 @@ const Users = (props) => {
                 {props.users.map((el) => (
                     <div className={c.wrapper}>
                         <div className={c.pictureForProfile}>
-                            <NavLink
-                                onClick={() => props.setCurrentUserID(el.id)}
-                                to={`/profile/${el.id}`}
-                            >
+                            <NavLink to={`/profile/${el.id}`}>
                                 <img
                                     src={
                                         el.photos.small ||

@@ -6,7 +6,6 @@ import {
     setUsers,
     unfollow,
 } from '../../redux/users-reducer';
-import { setCurrentUserID } from '../../redux/profile-reducer';
 import Users from './Users';
 import axios from 'axios';
 import React from 'react';
@@ -52,7 +51,6 @@ class UsersContainer extends React.Component {
                     totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
-                    setCurrentUserID={this.props.setCurrentUserID}
                 />
             </>
         );
@@ -100,7 +98,6 @@ let callBacks = {
     setUsers,
     changeCurrentPage,
     switchFetchingCondition,
-    setCurrentUserID,
 };
 
 export default connect(data, callBacks)(UsersContainer);
