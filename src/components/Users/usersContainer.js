@@ -5,6 +5,7 @@ import {
     follow,
     setUsers,
     unfollow,
+    switchFollowInProgressCondition,
 } from '../../redux/users-reducer';
 import Users from './Users';
 import axios from 'axios';
@@ -48,6 +49,10 @@ class UsersContainer extends React.Component {
                     currentPage={this.props.currentPage}
                     follow={this.props.follow}
                     unfollow={this.props.unfollow}
+                    followInProgress={this.props.followInProgress}
+                    switchFollowInProgressCondition={
+                        this.props.switchFollowInProgressCondition
+                    }
                 />
             </>
         );
@@ -62,6 +67,7 @@ const data = (state) => {
         currentPage: state.usersGeneralData.currentPage,
         isFetching: state.usersGeneralData.isFetching,
         currentUserID: state.profileGeneralData.currentUserID,
+        followInProgress: state.usersGeneralData.followInProgress,
     };
 };
 
@@ -71,6 +77,7 @@ let callBacks = {
     setUsers,
     changeCurrentPage,
     switchFetchingCondition,
+    switchFollowInProgressCondition,
 };
 
 export default connect(data, callBacks)(UsersContainer);

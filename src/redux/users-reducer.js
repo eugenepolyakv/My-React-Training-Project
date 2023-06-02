@@ -3,6 +3,8 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
 const SWITCH_FETCHING_CONDITION = 'SWITCH_FETCHING_CONDITION';
+const SWITCH_FOLLOW_IN_PROGRESS_CONDITION =
+    'SWITCH_FOLLOW_IN_PROGRESS_CONDITION';
 
 let initialState = {
     users: [],
@@ -10,6 +12,7 @@ let initialState = {
     totalUsersCount: 30,
     currentPage: 1,
     isFetching: false,
+    followInProgress: [],
 };
 
 export const UserReducer = (state = initialState, action) => {
@@ -49,6 +52,15 @@ export const UserReducer = (state = initialState, action) => {
                 ...state,
                 isFetching: action.fetching ? false : true,
             };
+        case SWITCH_FOLLOW_IN_PROGRESS_CONDITION:
+            return {
+                ...state,
+                followInProgress: action.fetching
+                    ? [...state.followInProgress, action.userID]
+                    : state.followInProgress.filter(
+                          (el) => el != action.userID
+                      ),
+            };
         default:
             return state;
     }
@@ -56,6 +68,11 @@ export const UserReducer = (state = initialState, action) => {
 export const switchFetchingCondition = (fetching) => ({
     type: SWITCH_FETCHING_CONDITION,
     fetching,
+});
+export const switchFollowInProgressCondition = (fetching, userID) => ({
+    type: SWITCH_FOLLOW_IN_PROGRESS_CONDITION,
+    fetching,
+    userID,
 });
 export const changeCurrentPage = (page) => ({
     type: CHANGE_CURRENT_PAGE,

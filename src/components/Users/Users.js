@@ -35,8 +35,15 @@ const Users = (props) => {
                             </NavLink>
                             <div>
                                 <button
+                                    disabled={props.followInProgress.some(
+                                        (val) => val == el.id
+                                    )}
                                     id={el.id}
                                     onClick={() => {
+                                        props.switchFollowInProgressCondition(
+                                            true,
+                                            el.id
+                                        );
                                         el.followed
                                             ? usersAPI
                                                   .unfollowPerson(el.id)
@@ -47,6 +54,10 @@ const Users = (props) => {
                                                       ) {
                                                           props.unfollow(el.id);
                                                       }
+                                                      props.switchFollowInProgressCondition(
+                                                          false,
+                                                          el.id
+                                                      );
                                                   })
                                             : usersAPI
                                                   .followPerson(el.id)
@@ -57,6 +68,10 @@ const Users = (props) => {
                                                       ) {
                                                           props.follow(el.id);
                                                       }
+                                                      props.switchFollowInProgressCondition(
+                                                          false,
+                                                          el.id
+                                                      );
                                                   });
                                     }}
                                 >
