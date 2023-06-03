@@ -22,6 +22,14 @@ export const usersAPI = {
             .delete(`follow/${userID}`)
             .then((response) => response.data);
     },
+    getAuthStatus() {
+        return instance.get('auth/me').then((response) => response.data);
+    },
+    getUserProfile(userID) {
+        return instance.get(
+            `https://social-network.samuraijs.com/api/1.0/profile/${userID}`
+        );
+    },
 };
 
 // export const getUsers = (currentPage, pageSize) => {

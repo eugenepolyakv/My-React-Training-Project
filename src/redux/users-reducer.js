@@ -1,3 +1,5 @@
+import { usersAPI } from '../api/api';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -50,7 +52,7 @@ export const UserReducer = (state = initialState, action) => {
         case SWITCH_FETCHING_CONDITION:
             return {
                 ...state,
-                isFetching: action.fetching ? false : true,
+                isFetching: action.fetching,
             };
         case SWITCH_FOLLOW_IN_PROGRESS_CONDITION:
             return {
@@ -79,5 +81,33 @@ export const changeCurrentPage = (page) => ({
     page,
 });
 export const setUsers = (users) => ({ type: SET_USERS, users });
-export const follow = (userID) => ({ type: FOLLOW, userID });
-export const unfollow = (userID) => ({ type: UNFOLLOW, userID });
+export const followAction = (userID) => ({ type: FOLLOW, userID });
+export const unfollowAction = (userID) => ({ type: UNFOLLOW, userID });
+
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(switchFetchingCondition(true));
+        usersAPI.getUsers(currentPage, pageSize).then((response) => {
+            dispatch(setUsers(response.items));
+            dispatch(switchFetchingCondition(false));
+        });
+    };
+};
+
+export const changeFollowConditionThunkCreator = (userID, isFollowed) => {
+    return async (dispatch) => {
+        dispatch(switchFollowInProgressCondition(true, userID));
+        isFollowed
+            ? await usersAPI.unfollowPerson(userID).then((response) => {
+                  if (response.resultCode === 0) {
+                      dispatch(unfollowAction(userID));
+                  }
+              })
+            : await usersAPI.followPerson(userID).then((response) => {
+                  if (response.resultCode === 0) {
+                      dispatch(followAction(userID));
+                  }
+              });
+        dispatch(switchFollowInProgressCondition(false, userID));
+    };
+};

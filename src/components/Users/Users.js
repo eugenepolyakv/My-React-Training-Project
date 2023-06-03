@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import c from './users.module.css';
-import axios from 'axios';
 import { usersAPI } from '../../api/api';
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -39,41 +38,12 @@ const Users = (props) => {
                                         (val) => val == el.id
                                     )}
                                     id={el.id}
-                                    onClick={() => {
-                                        props.switchFollowInProgressCondition(
-                                            true,
-                                            el.id
-                                        );
-                                        el.followed
-                                            ? usersAPI
-                                                  .unfollowPerson(el.id)
-                                                  .then((response) => {
-                                                      if (
-                                                          response.resultCode ===
-                                                          0
-                                                      ) {
-                                                          props.unfollow(el.id);
-                                                      }
-                                                      props.switchFollowInProgressCondition(
-                                                          false,
-                                                          el.id
-                                                      );
-                                                  })
-                                            : usersAPI
-                                                  .followPerson(el.id)
-                                                  .then((response) => {
-                                                      if (
-                                                          response.resultCode ===
-                                                          0
-                                                      ) {
-                                                          props.follow(el.id);
-                                                      }
-                                                      props.switchFollowInProgressCondition(
-                                                          false,
-                                                          el.id
-                                                      );
-                                                  });
-                                    }}
+                                    onClick={() =>
+                                        props.changeFollowConditionThunkCreator(
+                                            el.id,
+                                            el.followed
+                                        )
+                                    }
                                 >
                                     {el.followed ? 'Unfollow' : 'Follow'}
                                 </button>

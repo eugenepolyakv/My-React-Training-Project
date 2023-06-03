@@ -1,40 +1,28 @@
 import { connect } from 'react-redux';
 import {
     changeCurrentPage,
-    switchFetchingCondition,
-    follow,
-    setUsers,
-    unfollow,
-    switchFollowInProgressCondition,
+    getUsersThunkCreator,
+    changeFollowConditionThunkCreator,
 } from '../../redux/users-reducer';
 import Users from './Users';
-import axios from 'axios';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
-import { usersAPI } from '../../api/api';
 
 class UsersContainer extends React.Component {
     componentDidMount = () => {
-        this.props.switchFetchingCondition(this.props.isFetching);
-        usersAPI
-            .getUsers(this.props.currentPage, this.props.pageSize)
-            .then((response) => {
-                this.props.setUsers(response.items);
-                this.props.switchFetchingCondition(this.props.isFetching);
-            });
+        this.props.getUsersThunkCreator(
+            this.props.currentPage,
+            this.props.pageSize
+        );
     };
     changeCurrentPage = (page) => {
         this.props.changeCurrentPage(page);
-        this.props.switchFetchingCondition(this.props.isFetching);
-        usersAPI.getUsers(page, this.props.pageSize).then((response) => {
-            this.props.setUsers(response.items);
-            this.props.switchFetchingCondition(this.props.isFetching);
-        });
-    };
-    onFollowClick = (el) => {
-        el.followed
-            ? this.props.makePersonUnfollowed(el.id)
-            : this.props.makePersonFollowed(el.id);
+        this.props.getUsersThunkCreator(page, this.props.pageSize);
+        // this.props.switchFetchingCondition(this.props.isFetching);
+        // usersAPI.getUsers(page, this.props.pageSize).then((response) => {
+        //     this.props.setUsers(response.items);
+        //     this.props.switchFetchingCondition(this.props.isFetching);
+        // });
     };
     render() {
         return (
@@ -42,16 +30,13 @@ class UsersContainer extends React.Component {
                 {this.props.isFetching ? <Preloader /> : ''}
                 <Users
                     changeCurrentPage={this.changeCurrentPage}
-                    onFollowClick={this.onFollowClick}
                     users={this.props.users}
                     totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     currentPage={this.props.currentPage}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
                     followInProgress={this.props.followInProgress}
-                    switchFollowInProgressCondition={
-                        this.props.switchFollowInProgressCondition
+                    changeFollowConditionThunkCreator={
+                        this.props.changeFollowConditionThunkCreator
                     }
                 />
             </>
@@ -72,12 +57,9 @@ const data = (state) => {
 };
 
 let callBacks = {
-    follow,
-    unfollow,
-    setUsers,
     changeCurrentPage,
-    switchFetchingCondition,
-    switchFollowInProgressCondition,
+    getUsersThunkCreator,
+    changeFollowConditionThunkCreator,
 };
 
 export default connect(data, callBacks)(UsersContainer);
