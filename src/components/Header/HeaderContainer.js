@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import { setUserDataThunkCreator as getUserData } from '../../redux/auth-reducer';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 class HeaderContainer extends React.Component {
     componentDidMount() {
         this.props.getUserData();
@@ -19,4 +20,4 @@ const callBacks = {
     getUserData,
 };
 
-export default connect(data, callBacks)(HeaderContainer);
+export default compose(connect(data, callBacks))(HeaderContainer);
