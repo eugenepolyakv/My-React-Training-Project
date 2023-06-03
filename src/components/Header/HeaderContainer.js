@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import { setUserDataThunkCreator as getUserData } from '../../redux/auth-reducer';
 import { connect } from 'react-redux';
-import { usersAPI } from '../../api/api';
 class HeaderContainer extends React.Component {
     componentDidMount() {
         this.props.getUserData();
