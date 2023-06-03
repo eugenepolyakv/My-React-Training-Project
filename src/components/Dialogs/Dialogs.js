@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import classes from './Dialogs.module.css';
 import Dialogue from './Dialogue/Dialogue';
 import Message from './Message/Message';
@@ -19,6 +20,10 @@ const Dialogs = (props) => {
     let onSendMessage = () => {
         props.addNewMessage();
     };
+
+    if (!props.auth) {
+        return <Navigate to="/login" />;
+    }
     return (
         <div className={classes.dialogs}>
             <div className={classes.users}>{dialogueElements}</div>

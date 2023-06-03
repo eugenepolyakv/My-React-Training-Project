@@ -2,13 +2,22 @@ import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../redux/profile-reducer';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+    Navigate,
+    useLocation,
+    useNavigate,
+    useParams,
+} from 'react-router-dom';
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let userID = this.props.router.params.userID || 2;
         this.props.getCurrentProfile(userID);
     }
+
     render() {
+        if (!this.props.auth) {
+            return <Navigate to="/login" />;
+        }
         return <Profile currentProfileData={this.props.currentProfileData} />;
     }
 }
@@ -16,6 +25,7 @@ class ProfileContainer extends React.Component {
 let data = (state) => {
     return {
         currentProfileData: state.profileGeneralData.currentProfileData,
+        auth: state.auth.isAuth,
     };
 };
 
