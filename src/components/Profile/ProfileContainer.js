@@ -2,12 +2,8 @@ import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../redux/profile-reducer';
-import {
-    Navigate,
-    useLocation,
-    useNavigate,
-    useParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { withAuthRedirect } from '../../hocs/WithAuthRedirect';
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let userID = this.props.router.params.userID || 2;
@@ -15,21 +11,19 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        if (!this.props.auth) {
-            return <Navigate to="/login" />;
-        }
         return <Profile currentProfileData={this.props.currentProfileData} />;
     }
 }
 
-let data = (state) => {
+let dataForPresentionalComponent = (state) => {
     return {
         currentProfileData: state.profileGeneralData.currentProfileData,
-        auth: state.auth.isAuth,
     };
 };
 
 let callBacks = { getCurrentProfile };
+
+let WithAuthRedirectComponent = withAuthRedirect(ProfileContainer);
 
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
@@ -41,6 +35,9 @@ function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+let WithUrlDataContainerComponent = withRouter(WithAuthRedirectComponent);
 
-export default connect(data, callBacks)(WithUrlDataContainerComponent);
+export default connect(
+    dataForPresentionalComponent,
+    callBacks
+)(WithUrlDataContainerComponent);

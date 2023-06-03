@@ -20,10 +20,6 @@ const Dialogs = (props) => {
     let onSendMessage = () => {
         props.addNewMessage();
     };
-
-    if (!props.auth) {
-        return <Navigate to="/login" />;
-    }
     return (
         <div className={classes.dialogs}>
             <div className={classes.users}>{dialogueElements}</div>
