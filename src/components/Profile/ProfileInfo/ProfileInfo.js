@@ -1,12 +1,13 @@
 import Preloader from '../../common/Preloader/Preloader';
 import c from './ProfileInfo.module.css';
+import ProfileStatus from './ProfileStatus';
 
 const ProfileInfo = (props) => {
     return (
         <div>
-            <div className={c.imgOnAllWidth}>
+            {/* <div className={c.imgOnAllWidth}>
                 <img src="https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg" />
-            </div>
+            </div> */}
             <div>
                 <img
                     src={
@@ -17,6 +18,7 @@ const ProfileInfo = (props) => {
                         )
                     }
                 />
+                <ProfileStatus status="Hello my friends" />
             </div>
             <div>Имя пользователя: {props.currentProfileData.fullName}</div>
         </div>
