@@ -23,7 +23,22 @@ export const usersAPI = {
             .then((response) => response.data);
     },
     getUserProfile(userID) {
+        console.warn(
+            'Obselete method. Please use profileAPI.getUserProfile instead'
+        );
+        return profileAPI.getUserProfile(userID);
+    },
+};
+
+export const profileAPI = {
+    getUserProfile(userID) {
         return instance.get(`profile/${userID}`);
+    },
+    getStatus(userID) {
+        return instance.get(`profile/status/${userID}`);
+    },
+    updateStatus(status) {
+        return instance.put('profile/status/', { status });
     },
 };
 

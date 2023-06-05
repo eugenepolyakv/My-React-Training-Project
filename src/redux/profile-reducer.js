@@ -1,13 +1,15 @@
-import { usersAPI } from '../api/api';
+import { profileAPI } from '../api/api';
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_POST = 'UPDATE_POST';
 const SET_PROFILE = 'SET_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 const UnknownPhoto = 'https://cdn-icons-png.flaticon.com/512/37/37943.png';
 let initialState = {
     posts: [{ message: "What's up?" }, { message: "It's my first post" }],
     newPostText: '',
     currentProfileData: {},
+    status: '',
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -24,6 +26,8 @@ export const profileReducer = (state = initialState, action) => {
             };
         case UPDATE_POST:
             return { ...state, newPostText: action.newText };
+        case SET_STATUS:
+            return { ...state, status: action.status };
         case SET_PROFILE:
             return {
                 ...state,
@@ -48,9 +52,26 @@ export const updateNewPostActionCreator = (text) => {
         newText: text,
     };
 };
+export const setStatus = (status) => {
+    return { type: SET_STATUS, status };
+};
 
 export const getCurrentProfile = (userID) => (dispatch) => {
-    usersAPI.getUserProfile(userID).then((response) => {
+    profileAPI.getUserProfile(userID).then((response) => {
         dispatch(setProfile(response.data));
+    });
+};
+
+export const getUserStatus = (userID) => (dispatch) => {
+    profileAPI
+        .getStatus(userID)
+        .then((response) => dispatch(setStatus(response.data)));
+};
+
+export const updateUserStatus = (status) => (dispatch) => {
+    profileAPI.updateStatus(status).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
     });
 };
