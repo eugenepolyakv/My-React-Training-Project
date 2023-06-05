@@ -11,15 +11,21 @@ class ProfileStatus extends React.Component {
         console.log(this.state.temporaryStatus);
     };
 
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.status !== this.props.status) {
+            this.setState({ temporaryStatus: this.props.status });
+        }
+    };
+
     changeEditMode = () => {
         this.setState({
             editMode: this.state.editMode ? false : true,
         });
         this.props.updateUserStatus(this.state.temporaryStatus);
-        console.log(this.state.temporaryStatus);
     };
 
     render() {
+        console.log('Render of profile status');
         return (
             <div>
                 {this.state.editMode && (
