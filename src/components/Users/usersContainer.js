@@ -7,7 +7,7 @@ import {
 import Users from './Users';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
-import { withAuthRedirect } from '../../hocs/WithAuthRedirect';
+import { withoutAuthRedirect } from '../../hocs/authRedirect';
 
 class UsersContainer extends React.Component {
     componentDidMount = () => {
@@ -63,6 +63,6 @@ let callBacks = {
     changeFollowConditionThunkCreator,
 };
 
-let WithAuthRedirectComponent = withAuthRedirect(UsersContainer);
+let WithAuthRedirectComponent = withoutAuthRedirect(UsersContainer);
 
 export default connect(data, callBacks)(WithAuthRedirectComponent);

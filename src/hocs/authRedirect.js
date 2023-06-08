@@ -8,7 +8,7 @@ const dataForAuthComponent = (state) => {
     };
 };
 
-export const withAuthRedirect = (Component) => {
+export const withoutAuthRedirect = (Component) => {
     class RedirectComponent extends React.Component {
         render() {
             if (!this.props.auth) {
@@ -20,4 +20,14 @@ export const withAuthRedirect = (Component) => {
     let ConnectedAuthRedirectComponent =
         connect(dataForAuthComponent)(RedirectComponent);
     return ConnectedAuthRedirectComponent;
+};
+
+export const withAuthRedirect = (Component) => {
+    const RedirectComponent = (props) => {
+        if (props.auth) {
+            return <Navigate to="/profile" />;
+        }
+        return <Component {...props} />;
+    };
+    return connect(dataForAuthComponent)(RedirectComponent);
 };

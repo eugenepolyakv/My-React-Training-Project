@@ -9,7 +9,14 @@ const Header = (props) => {
             </div>
             <div className={classes.login}>
                 {props.authState.isAuth ? (
-                    props.authState.login
+                    <div className={classes.dropdown}>
+                        <button className={classes.dropbtn}>
+                            {props.authState.login}
+                        </button>
+                        <div className={classes.dropdownContent}>
+                            <NavLink to="/logout">logout</NavLink>
+                        </div>
+                    </div>
                 ) : (
                     <NavLink to="/login">login</NavLink>
                 )}
