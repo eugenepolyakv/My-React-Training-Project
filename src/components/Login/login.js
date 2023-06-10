@@ -29,9 +29,10 @@ export const LoginForm = (props) => {
                 />
             </div>
             <div>
-                {props.values.isError
+                {/* {props.values.isError
                     ? 'Wrong email or password. Try again'
-                    : null}
+                    : null} */}
+                {props.values.isError || null}
             </div>
             <div>
                 <MyCheckbox

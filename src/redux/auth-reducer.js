@@ -20,7 +20,7 @@ const authReducer = (state = initialState, action) => {
         case SWITCH_AUTH_ERROR_CONDITION:
             return {
                 ...state,
-                isErrorDuringAuth: state.isErrorDuringAuth ? false : true,
+                isErrorDuringAuth: action.data,
             };
         default:
             return state;
@@ -34,8 +34,9 @@ export const setUserData = (userData) => ({
     data: userData,
 });
 
-const switchAuthErrorCondition = () => ({
+const switchAuthErrorCondition = (errorMessage = false) => ({
     type: SWITCH_AUTH_ERROR_CONDITION,
+    data: errorMessage,
 });
 
 const clearUserData = () => {
@@ -55,7 +56,7 @@ export const getLoggedInThunk = (authData) => (dispatch) => {
         if (response.resultCode === 0) {
             dispatch(setUserData(response.data.userId));
         } else {
-            await dispatch(switchAuthErrorCondition());
+            await dispatch(switchAuthErrorCondition(response.messages[0]));
             dispatch(switchAuthErrorCondition());
         }
     });

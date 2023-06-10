@@ -35,7 +35,7 @@ class LoginClass extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.isError !== this.props.isError) {
             if (this.props.isError) {
-                this.setState({ isError: true });
+                this.setState({ isError: this.props.isError });
             }
         }
     }
