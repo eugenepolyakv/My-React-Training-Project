@@ -3,7 +3,7 @@ const SET_USER_DATA = 'SET_USER_DATA';
 const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
 const SWITCH_AUTH_ERROR_CONDITION = 'SWITCH_AUTH_ERROR_CONDITION';
 let initialState = {
-    id: null,
+    userId: null,
     email: null,
     login: null,
     isFetching: false,
@@ -46,6 +46,8 @@ const clearUserData = () => {
 export const setUserDataThunkCreator = () => (dispatch) => {
     authAPI.getAuthStatus().then((response) => {
         if (response.resultCode === 0) {
+            response.data['userId'] = response.data['id'];
+            delete response.data['id'];
             dispatch(setUserData(response.data));
         }
     });
@@ -54,7 +56,7 @@ export const setUserDataThunkCreator = () => (dispatch) => {
 export const getLoggedInThunk = (authData) => (dispatch) => {
     authAPI.getLoggedIn(authData).then(async (response) => {
         if (response.resultCode === 0) {
-            dispatch(setUserData(response.data.userId));
+            dispatch(setUserData(response.data));
         } else {
             await dispatch(switchAuthErrorCondition(response.messages[0]));
             dispatch(switchAuthErrorCondition());

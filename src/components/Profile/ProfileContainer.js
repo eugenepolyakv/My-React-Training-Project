@@ -11,7 +11,8 @@ import { withoutAuthRedirect } from '../../hocs/authRedirect';
 import { compose } from 'redux';
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        let userID = this.props.router.params.userID || 29194;
+        // let userID = this.props.router.params.userID || 29194;
+        let userID = this.props.router.params.userID || this.props.loggedUserId;
         this.props.getCurrentProfile(userID);
         this.props.getUserStatus(userID);
     }
@@ -31,6 +32,7 @@ let dataForPresentionalComponent = (state) => {
     return {
         currentProfileData: state.profileGeneralData.currentProfileData,
         status: state.profileGeneralData.status,
+        loggedUserId: state.auth.userId,
     };
 };
 
