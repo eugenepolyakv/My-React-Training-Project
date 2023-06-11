@@ -44,7 +44,7 @@ const clearUserData = () => {
 };
 
 export const setUserDataThunkCreator = () => (dispatch) => {
-    authAPI.getAuthStatus().then((response) => {
+    return authAPI.getAuthStatus().then((response) => {
         if (response.resultCode === 0) {
             response.data['userId'] = response.data['id'];
             delete response.data['id'];

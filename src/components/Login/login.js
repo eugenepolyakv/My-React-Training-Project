@@ -3,9 +3,6 @@ import { MyTextInput, MyCheckbox } from '../../formik/fieldTemplates';
 import c from './login.module.css';
 
 export const LoginForm = (props) => {
-    if (props.values.isError) {
-        console.log('TRUE');
-    }
     return (
         <Form className={c.block} onClick={() => props.handleChange()}>
             <div>
