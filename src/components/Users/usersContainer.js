@@ -8,6 +8,13 @@ import Users from './Users';
 import React from 'react';
 import Preloader from '../common/Preloader/Preloader';
 import { withoutAuthRedirect } from '../../hocs/authRedirect';
+import {
+    getUsers,
+    getPageSize,
+    getTotalUsersCount,
+    getCurrentPage,
+    getIsFetching,
+} from '../../redux/users-selectors';
 
 class UsersContainer extends React.Component {
     componentDidMount = () => {
@@ -47,11 +54,11 @@ class UsersContainer extends React.Component {
 
 const data = (state) => {
     return {
-        users: state.usersGeneralData.users,
-        pageSize: state.usersGeneralData.pageSize,
-        totalUsersCount: state.usersGeneralData.totalUsersCount,
-        currentPage: state.usersGeneralData.currentPage,
-        isFetching: state.usersGeneralData.isFetching,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
         currentUserID: state.profileGeneralData.currentUserID,
         followInProgress: state.usersGeneralData.followInProgress,
     };
