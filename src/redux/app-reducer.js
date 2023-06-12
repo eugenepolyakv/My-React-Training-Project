@@ -7,6 +7,8 @@ let initialState = {
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
+        // case 'FAKE':
+        //     return { ...state };
         case SET_INITIALIZED_SUCCESS:
             return { ...state, initialized: true };
         default:

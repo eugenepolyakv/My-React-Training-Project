@@ -10,6 +10,7 @@ import Preloader from '../common/Preloader/Preloader';
 import { withoutAuthRedirect } from '../../hocs/authRedirect';
 import {
     getUsers,
+    getUsersReselector,
     getPageSize,
     getTotalUsersCount,
     getCurrentPage,
@@ -33,6 +34,7 @@ class UsersContainer extends React.Component {
         // });
     };
     render() {
+        console.log('USERS RENDER');
         return (
             <>
                 {this.props.isFetching ? <Preloader /> : ''}
@@ -54,7 +56,7 @@ class UsersContainer extends React.Component {
 
 const data = (state) => {
     return {
-        users: getUsers(state),
+        users: getUsersReselector(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
