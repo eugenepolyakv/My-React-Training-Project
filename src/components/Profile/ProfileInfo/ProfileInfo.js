@@ -15,14 +15,18 @@ const ProfileInfo = (props) => {
                         )
                     }
                 />
-                {props.status ? (
+                <ProfileStatusWithHooks
+                    status={props.status}
+                    updateUserStatus={props.updateUserStatus}
+                />
+                {/* {props.status ? (
                     <ProfileStatusWithHooks
                         status={props.status}
                         updateUserStatus={props.updateUserStatus}
                     />
                 ) : (
                     <Preloader />
-                )}
+                )} */}
             </div>
             <div>Имя пользователя: {props.currentProfileData.fullName}</div>
         </div>
