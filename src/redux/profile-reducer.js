@@ -4,6 +4,7 @@ const ADD_POST = 'ADD_POST';
 const UPDATE_POST = 'UPDATE_POST';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const DELETE_POST = 'DELETE_POST';
 const UnknownPhoto = 'https://cdn-icons-png.flaticon.com/512/37/37943.png';
 let initialState = {
     posts: [{ message: "What's up?" }, { message: "It's my first post" }],
@@ -26,6 +27,11 @@ export const profileReducer = (state = initialState, action) => {
             };
         case UPDATE_POST:
             return { ...state, newPostText: action.newText };
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter((el) => el != action.id),
+            };
         case SET_STATUS:
             return { ...state, status: action.status };
         case SET_PROFILE:
@@ -44,6 +50,7 @@ export const profileReducer = (state = initialState, action) => {
     }
 };
 
+export const deletePostById = () => ({ type: DELETE_POST });
 export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setProfile = (profileData) => ({ type: SET_PROFILE, profileData });
 export const updateNewPostActionCreator = (text) => {
