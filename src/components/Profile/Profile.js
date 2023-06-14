@@ -2,7 +2,6 @@ import MyPosts from './MyPosts/MyPosts';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import classes from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-
 const Profile = (props) => {
     return (
         <div>
@@ -11,7 +10,13 @@ const Profile = (props) => {
                 status={props.status}
                 updateUserStatus={props.updateUserStatus}
             />
-            <MyPostsContainer store={props.store} />
+            <MyPostsContainer />
+            {/* <MyPosts
+                addPost={() => {}}
+                updateNewPostText={() => {}}
+                newPostText=""
+                posts={[]}
+            /> */}
         </div>
     );
 };
