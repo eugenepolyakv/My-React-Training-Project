@@ -17,7 +17,7 @@ const Users = (props) => {
         }
     }
 
-    console.log(pagesArr);
+    // console.log(pagesArr);
     // for (let i = 1; i < pagesCount + 1; i++) {
     //     pagesArr.push(i);
     // }
