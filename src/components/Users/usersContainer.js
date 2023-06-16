@@ -3,6 +3,7 @@ import {
     changeCurrentPage,
     getUsersThunkCreator,
     changeFollowConditionThunkCreator,
+    setTotalUserCountThunk,
 } from '../../redux/users-reducer';
 import Users from './Users';
 import React from 'react';
@@ -19,6 +20,7 @@ import {
 
 class UsersContainer extends React.Component {
     componentDidMount = () => {
+        this.props.setTotalUserCountThunk();
         this.props.getUsersThunkCreator(
             this.props.currentPage,
             this.props.pageSize
@@ -70,6 +72,7 @@ let callBacks = {
     changeCurrentPage,
     getUsersThunkCreator,
     changeFollowConditionThunkCreator,
+    setTotalUserCountThunk,
 };
 
 let WithAuthRedirectComponent = withoutAuthRedirect(UsersContainer);

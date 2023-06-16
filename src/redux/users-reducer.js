@@ -7,11 +7,12 @@ const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
 const SWITCH_FETCHING_CONDITION = 'SWITCH_FETCHING_CONDITION';
 const SWITCH_FOLLOW_IN_PROGRESS_CONDITION =
     'SWITCH_FOLLOW_IN_PROGRESS_CONDITION';
+const SET_TOTAL_USER_COUNT = 'SET_TOTAL_USER_COUNT';
 
 let initialState = {
     users: [],
     pageSize: 10,
-    totalUsersCount: 30,
+    totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
     followInProgress: [],
@@ -38,6 +39,11 @@ export const UserReducer = (state = initialState, action) => {
                     }
                     return u;
                 }),
+            };
+        case SET_TOTAL_USER_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.amount,
             };
         case SET_USERS:
             return {
@@ -83,6 +89,13 @@ export const changeCurrentPage = (page) => ({
 export const setUsers = (users) => ({ type: SET_USERS, users });
 export const followAction = (userID) => ({ type: FOLLOW, userID });
 export const unfollowAction = (userID) => ({ type: UNFOLLOW, userID });
+const setTotalUserCount = (amount) => ({ type: SET_TOTAL_USER_COUNT, amount });
+
+export const setTotalUserCountThunk = () => (dispatch) => {
+    usersAPI.getUsers().then((response) => {
+        dispatch(setTotalUserCount(response.totalCount));
+    });
+};
 
 export const getUsersThunkCreator = (currentPage, pageSize) => {
     return (dispatch) => {

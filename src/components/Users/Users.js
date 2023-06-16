@@ -1,23 +1,65 @@
 import { NavLink } from 'react-router-dom';
 import c from './users.module.css';
 import { usersAPI } from '../../api/api';
+import { useState } from 'react';
 const Users = (props) => {
+    const [currentBlockOfTen, setBlock] = useState(0);
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
     let pagesArr = [];
-    for (let i = 1; i < pagesCount + 1; i++) {
-        pagesArr.push(i);
+    if (pagesCount > 0) {
+        let helpArr = [];
+        for (let i = 1; i < pagesCount + 1; i++) {
+            helpArr.push(i);
+            if (i % 10 == 0 || i == pagesCount) {
+                pagesArr.push(helpArr);
+                helpArr = [];
+            }
+        }
     }
+
+    console.log(pagesArr);
+    // for (let i = 1; i < pagesCount + 1; i++) {
+    //     pagesArr.push(i);
+    // }
     return (
         <div>
             <div>
-                {pagesArr.map((page) => (
-                    <span
-                        onClick={() => props.changeCurrentPage(page)}
-                        className={props.currentPage == page && c.selectedPage}
+                {currentBlockOfTen > 0 ? (
+                    <button
+                        onClick={() => {
+                            props.changeCurrentPage(
+                                pagesArr[currentBlockOfTen - 1][0]
+                            );
+                            setBlock(currentBlockOfTen - 1);
+                        }}
                     >
-                        {page}
-                    </span>
-                ))}
+                        back
+                    </button>
+                ) : null}
+                {pagesArr.length > 0
+                    ? pagesArr[currentBlockOfTen].map((page) => (
+                          <span
+                              onClick={() => props.changeCurrentPage(page)}
+                              className={
+                                  props.currentPage == page && c.selectedPage
+                              }
+                          >
+                              {page}
+                          </span>
+                      ))
+                    : null}
+                {(currentBlockOfTen + 1) * 10 >= pagesCount ? null : (
+                    <button
+                        onClick={() => {
+                            props.changeCurrentPage(
+                                pagesArr[currentBlockOfTen + 1][0]
+                            );
+                            setBlock(currentBlockOfTen + 1);
+                        }}
+                    >
+                        forward
+                    </button>
+                )}
             </div>
             Users
             <div className={c.mainDiv}>
