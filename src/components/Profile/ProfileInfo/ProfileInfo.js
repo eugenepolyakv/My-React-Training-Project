@@ -25,9 +25,7 @@ const ProfileInfo = (props) => {
                         status={props.status}
                         updateUserStatus={props.updateUserStatus}
                     />
-                ) : (
-                    <Preloader />
-                )}
+                ) : null}
             </div>
             <div>Имя пользователя: {props.currentProfileData.fullName}</div>
         </div>

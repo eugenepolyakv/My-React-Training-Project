@@ -6,7 +6,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
 import UsersContainer from './components/Users/usersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -14,6 +14,7 @@ import Login from './components/Login/loginContainer';
 import Logout from './components/Login/logout';
 import React from 'react';
 import Preloader from './components/common/Preloader/Preloader';
+import store from './redux/redux-store';
 class App extends React.Component {
     componentDidMount() {
         this.props.initializeApp();
@@ -26,15 +27,14 @@ class App extends React.Component {
     // }
 
     render() {
-        if (!this.props.initialized) {
-            return <Preloader />;
-        }
+        if (!this.props.initialized) return <Preloader />;
         return (
             <BrowserRouter>
                 <div className="app-wrapper">
                     <HeaderContainer />
                     <Navbar />
                     <div className="app-wrapper-content">
+                        <div>something</div>
                         <Routes>
                             <Route
                                 path="/dialogs/"
@@ -58,6 +58,25 @@ class App extends React.Component {
     }
 }
 
+const AppWithProvider = (Component) => {
+    const app = () => {
+        return (
+            <Provider store={store}>
+                <Component />
+            </Provider>
+        );
+    };
+    return app;
+};
+
+// const AppWithProvider = (Component) => {
+//     return (
+//         <Provider store={store}>
+//             <Component />
+//         </Provider>
+//     );
+// };
+
 const data = (state) => {
     return { initialized: state.appInitialized.initialized };
 };
@@ -66,4 +85,4 @@ const callBacks = {
     initializeApp,
 };
 
-export default connect(data, callBacks)(App);
+export default AppWithProvider(connect(data, callBacks)(App));
