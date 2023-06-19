@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
 import UsersContainer from './components/Users/usersContainer';
@@ -33,7 +33,7 @@ class App extends React.Component {
     render() {
         if (!this.props.initialized) return <Preloader />;
         return (
-            <BrowserRouter>
+            <HashRouter basename="/">
                 <div className="app-wrapper">
                     <HeaderContainer />
                     <Navbar />
@@ -65,7 +65,7 @@ class App extends React.Component {
                         </React.Suspense>
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }
