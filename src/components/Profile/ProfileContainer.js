@@ -5,24 +5,39 @@ import {
     getCurrentProfile,
     getUserStatus,
     updateUserStatus,
+    savePhoto,
 } from '../../redux/profile-reducer';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { withoutAuthRedirect } from '../../hocs/authRedirect';
 import { compose } from 'redux';
 class ProfileContainer extends React.Component {
-    componentDidMount() {
-        // let userID = this.props.router.params.userID || 29194;
+    refreshProfile() {
         let userID = this.props.router.params.userID || this.props.loggedUserId;
         this.props.getCurrentProfile(userID);
         this.props.getUserStatus(userID);
     }
 
+    componentDidMount() {
+        // let userID = this.props.router.params.userID || 29194;
+        this.refreshProfile();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.router.params.userID !== prevProps.router.params.userID
+        ) {
+            this.refreshProfile();
+        }
+    }
+
     render() {
         return (
             <Profile
+                isOwner={!this.props.router.params.userID}
                 currentProfileData={this.props.currentProfileData}
                 status={this.props.status}
                 updateUserStatus={this.props.updateUserStatus}
+                savePhoto={this.props.savePhoto}
             />
         );
     }
@@ -36,7 +51,12 @@ let dataForPresentionalComponent = (state) => {
     };
 };
 
-let callBacks = { getCurrentProfile, getUserStatus, updateUserStatus };
+let callBacks = {
+    getCurrentProfile,
+    getUserStatus,
+    updateUserStatus,
+    savePhoto,
+};
 
 // let WithAuthRedirectComponent = withAuthRedirect(ProfileContainer);
 

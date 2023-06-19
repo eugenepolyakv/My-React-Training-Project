@@ -5,6 +5,7 @@ const UPDATE_POST = 'UPDATE_POST';
 const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SAVE_PHOTO = 'SAVE_PHOTO';
 const UnknownPhoto = 'https://cdn-icons-png.flaticon.com/512/37/37943.png';
 let initialState = {
     posts: [{ message: "What's up?" }, { message: "It's my first post" }],
@@ -34,6 +35,14 @@ export const profileReducer = (state = initialState, action) => {
             };
         case SET_STATUS:
             return { ...state, status: action.status };
+        case SAVE_PHOTO:
+            return {
+                ...state,
+                currentProfileData: {
+                    ...state.currentProfileData,
+                    photos: action.photos,
+                },
+            };
         case SET_PROFILE:
             return {
                 ...state,
@@ -59,6 +68,8 @@ export const updateNewPostActionCreator = (text) => {
         newText: text,
     };
 };
+export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO, photos });
+
 export const setStatus = (status) => {
     return { type: SET_STATUS, status };
 };
@@ -81,4 +92,11 @@ export const updateUserStatus = (status) => (dispatch) => {
             dispatch(setStatus(status));
         }
     });
+};
+
+export const savePhoto = (file) => async (dispatch) => {
+    let response = await profileAPI.savePhoto(file);
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos));
+    }
 };

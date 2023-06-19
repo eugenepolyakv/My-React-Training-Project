@@ -4,6 +4,12 @@ import ProfileStatus from './ProfileStatus';
 import ProfileStatusWithHooks from './ProilfeStatusWithHooks';
 const ProfileInfo = (props) => {
     console.log('PROFILE INFO RENDER');
+    const onMainPhotoSelected = (e) => {
+        if (e.target.files.length) {
+            props.savePhoto(e.target.files[0]);
+        }
+    };
+
     return (
         <div>
             <div>
@@ -16,6 +22,9 @@ const ProfileInfo = (props) => {
                         )
                     }
                 />
+                {props.isOwner && (
+                    <input type="file" onChange={onMainPhotoSelected} />
+                )}
                 {/* <ProfileStatusWithHooks
                     status={props.status}
                     updateUserStatus={props.updateUserStatus}
