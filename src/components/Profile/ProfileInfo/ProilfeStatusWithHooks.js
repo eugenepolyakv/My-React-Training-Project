@@ -18,23 +18,20 @@ const ProfileStatusWithHooks = (props) => {
     };
 
     return (
-        <div>
+        <b>
+            Status:{' '}
             {editMode && (
-                <div>
-                    <input
-                        onChange={(e) => editStatus(e)}
-                        autoFocus={true}
-                        value={status}
-                        onBlur={() => fetchStatusOnServer()}
-                    ></input>
-                </div>
+                <input
+                    onChange={(e) => editStatus(e)}
+                    autoFocus={true}
+                    value={status}
+                    onBlur={() => fetchStatusOnServer()}
+                ></input>
             )}
             {!editMode && (
-                <div>
-                    <span onClick={() => setEditMode(true)}>{status}</span>
-                </div>
+                <span onClick={() => setEditMode(true)}>{status}</span>
             )}
-        </div>
+        </b>
     );
 };
 

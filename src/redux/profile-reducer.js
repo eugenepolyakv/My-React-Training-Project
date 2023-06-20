@@ -6,11 +6,14 @@ const SET_PROFILE = 'SET_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
 const SAVE_PHOTO = 'SAVE_PHOTO';
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
+const SWITCH_EDIT_ERROR_CONDITION = 'SWITCH_EDIT_ERROR_CONDITION';
 const UnknownPhoto = 'https://cdn-icons-png.flaticon.com/512/37/37943.png';
 let initialState = {
     posts: [{ message: "What's up?" }, { message: "It's my first post" }],
     newPostText: '',
     currentProfileData: {},
+    isErrorDuringEditData: false,
     status: '',
 };
 
@@ -35,6 +38,22 @@ export const profileReducer = (state = initialState, action) => {
             };
         case SET_STATUS:
             return { ...state, status: action.status };
+        case UPDATE_USER_DATA:
+            // const {
+            //     lookingForAJob,
+            //     lookingForAJobDescription,
+            //     fullName,
+            //     ...contacts
+            // } = action.data;
+            return {
+                ...state,
+                currentProfileData: {
+                    ...state.currentProfileData,
+                    ...action.data,
+                },
+            };
+        case SWITCH_EDIT_ERROR_CONDITION:
+            return { ...state, isErrorDuringEditData: action.message };
         case SAVE_PHOTO:
             return {
                 ...state,
@@ -58,7 +77,10 @@ export const profileReducer = (state = initialState, action) => {
             return state;
     }
 };
-
+const switchEditErrorCondition = (message = false) => ({
+    type: SWITCH_EDIT_ERROR_CONDITION,
+    message,
+});
 export const deletePostById = () => ({ type: DELETE_POST });
 export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setProfile = (profileData) => ({ type: SET_PROFILE, profileData });
@@ -68,6 +90,7 @@ export const updateNewPostActionCreator = (text) => {
         newText: text,
     };
 };
+const updateUserDataSuccess = (data) => ({ type: UPDATE_USER_DATA, data });
 export const savePhotoSuccess = (photos) => ({ type: SAVE_PHOTO, photos });
 
 export const setStatus = (status) => {
@@ -92,6 +115,27 @@ export const updateUserStatus = (status) => (dispatch) => {
             dispatch(setStatus(status));
         }
     });
+};
+
+export const updateUserData = (data) => async (dispatch) => {
+    const { lookingForAJob, lookingForAJobDescription, fullName, ...contacts } =
+        data;
+    const validData = {
+        lookingForAJob,
+        lookingForAJobDescription,
+        fullName,
+        contacts,
+        aboutMe: 'something',
+    };
+    const response = await profileAPI.updateUserData(validData);
+    if (response.data.resultCode === 0) {
+        dispatch(updateUserDataSuccess(validData));
+        return 'Success';
+    } else {
+        await dispatch(switchEditErrorCondition(response.data.messages[0]));
+        dispatch(switchEditErrorCondition());
+        return 'Error';
+    }
 };
 
 export const savePhoto = (file) => async (dispatch) => {
