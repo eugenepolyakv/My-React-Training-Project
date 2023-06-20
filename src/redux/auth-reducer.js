@@ -2,6 +2,7 @@ import { authAPI } from '../api/api';
 const SET_USER_DATA = 'SET_USER_DATA';
 const CLEAR_USER_DATA = 'CLEAR_USER_DATA';
 const SWITCH_AUTH_ERROR_CONDITION = 'SWITCH_AUTH_ERROR_CONDITION';
+const SET_CAPTCHA = 'SET_CAPTCHA';
 let initialState = {
     userId: null,
     email: null,
@@ -9,6 +10,7 @@ let initialState = {
     isFetching: false,
     isErrorDuringAuth: false,
     isAuth: false,
+    captchaUrl: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -17,6 +19,8 @@ const authReducer = (state = initialState, action) => {
             return { ...state, ...action.data, isAuth: true };
         case CLEAR_USER_DATA:
             return { ...state, isAuth: false };
+        case SET_CAPTCHA:
+            return { ...state, captchaUrl: action.url };
         case SWITCH_AUTH_ERROR_CONDITION:
             return {
                 ...state,
@@ -29,6 +33,7 @@ const authReducer = (state = initialState, action) => {
 
 export default authReducer;
 
+const setCaptcha = (url) => ({ type: SET_CAPTCHA, url });
 export const setUserData = (userData) => ({
     type: SET_USER_DATA,
     data: userData,
@@ -58,10 +63,18 @@ export const getLoggedInThunk = (authData) => (dispatch) => {
         if (response.resultCode === 0) {
             dispatch(setUserData(response.data));
         } else {
+            if (response.resultCode === 10) {
+                dispatch(getCaptcaUrl());
+            }
             await dispatch(switchAuthErrorCondition(response.messages[0]));
             dispatch(switchAuthErrorCondition());
         }
     });
+};
+
+export const getCaptcaUrl = () => async (dispatch) => {
+    const response = await authAPI.getCaptcha();
+    dispatch(setCaptcha(response.data.url));
 };
 
 export const logoutThunk = () => (dispatch) => {

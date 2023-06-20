@@ -67,6 +67,9 @@ export const authAPI = {
     logout() {
         return instance.delete('auth/login').then((response) => response.data);
     },
+    getCaptcha() {
+        return instance.get('security/get-captcha-url');
+    },
 };
 
 // export const getUsers = (currentPage, pageSize) => {

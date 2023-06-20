@@ -3,6 +3,7 @@ import { MyTextInput, MyCheckbox } from '../../formik/fieldTemplates';
 import c from './login.module.css';
 
 export const LoginForm = (props) => {
+    console.log(props.values);
     return (
         <Form className={c.block} onClick={() => props.handleChange()}>
             <div>
@@ -43,7 +44,18 @@ export const LoginForm = (props) => {
                     label="Remember me"
                 ></MyCheckbox>
             </div>
-
+            {props.captchaUrl ? (
+                <div>
+                    <div>
+                        <img src={`${props.captchaUrl}`} />
+                    </div>
+                    <MyTextInput
+                        placeholder="Enter captcha"
+                        name="captcha"
+                        type="text"
+                    ></MyTextInput>
+                </div>
+            ) : null}
             <div>
                 <button type="submit">Submit</button>
             </div>

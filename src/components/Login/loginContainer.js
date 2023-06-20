@@ -6,7 +6,10 @@ import { getLoggedInThunk } from '../../redux/auth-reducer';
 import React from 'react';
 
 const data = (state) => {
-    return { isError: state.auth.isErrorDuringAuth };
+    return {
+        captchaUrl: state.auth.captchaUrl,
+        isError: state.auth.isErrorDuringAuth,
+    };
 };
 
 class LoginClass extends React.Component {
@@ -64,6 +67,7 @@ class LoginClass extends React.Component {
                             <LoginForm
                                 {...props}
                                 handleChange={this.handleChange}
+                                captchaUrl={this.props.captchaUrl}
                             ></LoginForm>
                         );
                     }}
