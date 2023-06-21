@@ -5,7 +5,13 @@ import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { HashRouter, BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+    HashRouter,
+    BrowserRouter,
+    Route,
+    Routes,
+    Navigate,
+} from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 import { initializeApp } from './redux/app-reducer';
 import UsersContainer from './components/Users/usersContainer';
@@ -41,6 +47,10 @@ class App extends React.Component {
                         <React.Suspense fallback={<Preloader />}>
                             <Routes>
                                 <Route
+                                    path="/"
+                                    element={<Navigate to="/profile" />}
+                                />
+                                <Route
                                     path="/dialogs/"
                                     element={<DialogsContainer />}
                                     // element={<DialogsContainer />}
@@ -61,6 +71,10 @@ class App extends React.Component {
                                 />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/logout" element={<Logout />} />
+                                <Route
+                                    path="*"
+                                    element={<div>404 not found</div>}
+                                />
                             </Routes>
                         </React.Suspense>
                     </div>
